@@ -12,11 +12,11 @@ namespace HolaMundo.WebApi.Controllers
 		public IActionResult Get()
 		{
 			Eventos evento = new Eventos();
-			evento.CantidadHoras = 4;
-			evento.CantidadPersonas = 12; 
-			evento.FechaEvento = DateTime.Now.AddDays(2);
+			evento.CantidadHoras = 12;
+			evento.CantidadPersonas = 28; 
+			evento.FechaEvento = DateTime.Now.AddDays(9);
 			 
-			evento.NombreEvento = "Despedida de Soltero de Diego Peppert";
+			evento.NombreEvento = "Despedida de Soltero de Casemiro";
 
 			return Ok(evento);
 
