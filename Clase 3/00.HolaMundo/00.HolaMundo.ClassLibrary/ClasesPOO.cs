@@ -2,6 +2,8 @@
 {
 
 	public class Auditora { 
+
+		//Encapsulamiento (private public protected)
 		private int IdUsuarioAlta { get; set; }
 		private DateTime FechaAlta { get; set; }
 
@@ -15,6 +17,8 @@
 							//Herencia
 	public class Eventos: Auditora
 	{
+
+		//Constructor
 		public Eventos()
 		{
 			this.SetDatosAuditoria(45);
