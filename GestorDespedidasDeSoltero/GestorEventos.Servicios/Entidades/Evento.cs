@@ -18,5 +18,12 @@ namespace GestorEventos.Servicios.Entidades
 
 		public int IdPersonaContacto { get; set; }
 
+		public bool Visible { get; set; }
+
 	}
-}
+
+
+ 
+
+
+} 
