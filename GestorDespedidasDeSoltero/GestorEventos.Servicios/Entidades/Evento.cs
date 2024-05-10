@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestorEventos.Servicios.Entidades
 {
-	public class Eventos
+	public class Evento
 	{
 		/*IdEvento, Nombre, FechaEvento, CantPersonas, IdTipoDespedida, IdPersonaAgasajada, IdPersonaContacto*/
 		public int IdEvento { get; set; }

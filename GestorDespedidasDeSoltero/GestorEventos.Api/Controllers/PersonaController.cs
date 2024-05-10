@@ -32,5 +32,47 @@ namespace GestorEventos.Api.Controllers
 				return Ok(persona);
 		}
 
+
+		[HttpPost]
+		public IActionResult PostPersona([FromBody] Persona persona)
+		{
+			PersonaService personaService = new PersonaService();
+
+			personaService.AgregarNuevaPersona(persona);
+
+			return Ok();
+		}
+
+		[HttpPut("{idPersona:int}")]
+		public IActionResult PutPersona(int idPersona, [FromBody] Persona persona)
+		{
+			PersonaService personaService = new PersonaService();
+
+			personaService.ModificarPersona(idPersona, persona);
+
+			return Ok();
+
+		}
+
+		[HttpPatch("borradologico/{idPersona:int}")]
+		public IActionResult BorradoLogicoPersona(int idPersona)
+		{
+			PersonaService personaService = new PersonaService();
+
+			personaService.BorrarLogicamentePersona(idPersona);
+
+			return Ok();
+		}
+
+		[HttpDelete("{idPersona:int}")]
+		public IActionResult BorradoFisico(int idPersona)
+		{
+			PersonaService personaService = new PersonaService();
+			personaService.BorrarFisicamentePersona(idPersona);
+
+			return Ok();
+		}
+
+
 	}
 }

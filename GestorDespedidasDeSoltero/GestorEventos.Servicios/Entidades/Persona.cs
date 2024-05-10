@@ -22,6 +22,8 @@ namespace GestorEventos.Servicios.Entidades
 
 		public string Email { get; set; }
 
+		public bool Borrado { get; set; }
+
 
 	}
 }
