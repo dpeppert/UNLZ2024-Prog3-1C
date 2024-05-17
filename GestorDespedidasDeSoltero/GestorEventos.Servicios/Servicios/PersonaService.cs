@@ -25,15 +25,7 @@ namespace GestorEventos.Servicios.Servicios
 
 			//Connection string 
 			_connectionString = "Password=Db4dmin!;Persist Security Info=True;User ID=dbadmin;Initial Catalog=gestioneventos;Data Source=azunlz2024dbdes01.database.windows.net";
-								//"Password=Db4dmin!;Persist Security Info=True;User ID=dbadmin;Initial Catalog=gestioneventos;Data Source=azunlz2024dbdes01.database.windows.net​";
-			/*PersonasDePrueba = new List<Persona>
-			{
-				new Persona{ IdPersona = 1, Nombre = "Esteban", Apellido = "Gomez", Direccion = "9 de julio 2892", Email = "estebangomez@yopmail.com", Telefono = "1111111"},
-				new Persona{ IdPersona = 2, Nombre = "Jose", Apellido = "Peñaloza", Direccion = "Curuzu Cuatia 12", Email = "Josepenaloza@yopmail.com", Telefono = "22222222"},
-				new Persona{ IdPersona = 3, Nombre = "Juana", Apellido = "Manzo", Direccion = "Primera Junta 558", Email = "juanamanzo@yopmail.com", Telefono = "3333333"},
-
-			};*/
-
+		 
 
 
 		}
