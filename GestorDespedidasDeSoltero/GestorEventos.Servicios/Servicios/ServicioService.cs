@@ -39,7 +39,7 @@ namespace GestorEventos.Servicios.Servicios
 		{
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                Servicio servicio = db.Query<Servicio>("SELECT * FROM Servicios WHERE IdPersona = " + IdServicio.ToString()).FirstOrDefault();
+                Servicio servicio = db.Query<Servicio>("SELECT * FROM Servicios WHERE IdServicio = " + IdServicio.ToString()).FirstOrDefault();
 
                 return servicio;
             }
@@ -49,7 +49,7 @@ namespace GestorEventos.Servicios.Servicios
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Servicios (Descripcion, PrecioServicio, Borrado) VALUES ( @Descripcion, @PrecioServicio, @Borrado)";
+                string query = "INSERT INTO Servicios (Descripcion, PrecioServicio, Borrado) VALUES ( @Descripcion, @PrecioServicio, 0)";
                 db.Execute(query, servicio);
                 return true;
             }
