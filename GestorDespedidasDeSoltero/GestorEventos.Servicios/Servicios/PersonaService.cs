@@ -76,13 +76,15 @@ namespace GestorEventos.Servicios.Servicios
 
 		}
 
-		public bool AgregarNuevaPersona (Persona persona)
+		public int AgregarNuevaPersona (Persona persona)
 		{
 			using (IDbConnection db = new SqlConnection(_connectionString))
 			{
-				string query = "INSERT INTO Personas (Nombre, Apellido, Direccion, Telefono, Email) VALUES ( @Nombre, @Apellido, @Direccion, @Telefono, @Email)";
+				string query = "INSERT INTO Personas (Nombre, Apellido, Direccion, Telefono, Email) VALUES ( @Nombre, @Apellido, @Direccion, @Telefono, @Email); SELECT Inserted.IdPersona";
 				db.Execute(query, persona);
-				return true;
+
+
+				return persona.IdPersona;
 			}
 		}
 

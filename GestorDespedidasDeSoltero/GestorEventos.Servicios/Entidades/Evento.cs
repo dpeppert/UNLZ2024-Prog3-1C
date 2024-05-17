@@ -23,7 +23,13 @@ namespace GestorEventos.Servicios.Entidades
 	}
 
 
- 
+	public class EventoModel
+	{
+		public Evento evento { get; set; }
+		public Persona PersonaContacto { get; set; }
+		public Persona PersonaAgasajada { get; set; }
+		public IEnumerable<Servicio> ListaDeServiciosContratados { get; set; }
+	}
 
 
 } 

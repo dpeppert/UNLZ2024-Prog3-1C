@@ -63,6 +63,41 @@ namespace GestorEventos.Api.Controllers
 		}
 
 
+
+		[HttpPost("NuevoEventoCompleto")]
+		public IActionResult PostNuevoEventoModel([FromBody] EventoModel evento)
+		{
+			EventoService eventoService = new EventoService();
+
+			eventoService.PostNuevoEventoCompleto(evento);
+
+			return Ok();
+
+
+
+			/*
+			 Evento --> 2 personas 
+					--> Lista de Servicios
+			 
+			 */
+
+
+/*			bool resultado = eventoService.PostNuevoEvento(evento);
+
+			if (resultado)
+			{
+
+				return Ok();
+			}
+			else
+			{
+				return UnprocessableEntity();
+			}
+*/
+
+		}
+
+
 		[HttpPut("{idEvento:int}/Modificar")]
 
 		public IActionResult PutNuevoEvento(int idEvento, [FromBody] Evento evento)
