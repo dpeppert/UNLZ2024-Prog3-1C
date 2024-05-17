@@ -2,58 +2,93 @@
 using GestorEventos.Servicios.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace GestorEventos.Servicios.Servicios
 {
 	public class ServicioService
 	{
-		public IEnumerable<Servicio> Servicios { get; set; }
+
+		private string _connectionString; 
 
 		public ServicioService ()
 		{
-			this.Servicios = new List<Servicio>
-			{
-				new Servicio{ IdServicio = 1, Descripcion = "Bar Hopping", PrecioServicio = 25000 },
-				new Servicio{ IdServicio = 2, Descripcion = "Servicio de Transporte", PrecioServicio = 20000 },
-				new Servicio{ IdServicio = 3, Descripcion = "Entradas de Boliches Incluidas", PrecioServicio = 10000 }
-			};
+
+            _connectionString = "Password=Db4dmin!;Persist Security Info=True;User ID=dbadmin;Initial Catalog=gestioneventos;Data Source=azunlz2024dbdes01.database.windows.net";
+
+          
 		}
 
 		public IEnumerable<Servicio> GetServicios()
 		{
-			return this.Servicios;
-		}
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                List<Servicio> servicios = db.Query<Servicio>("SELECT * FROM Servicios WHERE Borrado = 0").ToList();
+
+                return servicios;
+
+            }
+        }
 
 		public Servicio GetServiciosPorId(int IdServicio)
 		{
-			var servicios = Servicios.Where(x => x.IdServicio == IdServicio);
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                Servicio servicio = db.Query<Servicio>("SELECT * FROM Servicios WHERE IdPersona = " + IdServicio.ToString()).FirstOrDefault();
 
-			if (servicios == null)
-				return null;
+                return servicio;
+            }
+        }
 
-			return servicios.First();
-		}
+        public bool AgregarNuevoServicio(Servicio servicio)
+        {
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                string query = "INSERT INTO Servicios (Descripcion, PrecioServicio, Borrado) VALUES ( @Descripcion, @PrecioServicio, @Borrado)";
+                db.Execute(query, servicio);
+                return true;
+            }
+        }
 
+        public bool ModificarServicio(int idServicio, Servicio servicio)
+        {
 
-		public bool AgregarServicio(Servicio servicio )
-		{
-			try
-			{
-				List<Servicio> lista = this.Servicios.ToList();
-				lista.Add(servicio);
-//				this.Servicios.ToList().Add(servicio);
-				return true;
-			}
-			catch(Exception ex)
-			{
-				return false;
-			}
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                string query = "UPDATE Servicios SET Descripcion = @Descripcion, PrecioServicio = @PrecioServicio  WHERE IdServicio = " + idServicio.ToString();
+                db.Execute(query, servicio);
 
+                return true;
+            }
 
-		}
+        }
 
-	}
+        public bool BorrarLogicamenteServicio(int idServicio)
+        {
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                string query = "UPDATE Servicios SET Borrado = 1 where IdServicio = " + idServicio.ToString();
+                db.Execute(query);
+
+                return true;
+            }
+        }
+
+        public bool BorrarFisicamenteServicio(int idServicio)
+        {
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                string query = "DELETE FROM dbo.Servicios WHERE IdServicio = " + idServicio.ToString();
+                db.Execute(query);
+
+                return true;
+            }
+        }
+
+    }
 }
