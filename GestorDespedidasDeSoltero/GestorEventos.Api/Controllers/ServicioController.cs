@@ -35,7 +35,7 @@ namespace GestorEventos.Api.Controllers
 		{
 
 			ServicioService serviciosService = new ServicioService();
-			serviciosService.AgregarServicio(servicionuevo);
+			serviciosService.AgregarNuevoServicio(servicionuevo);
 
 			return Ok();
 		}

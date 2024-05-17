@@ -146,7 +146,7 @@ namespace GestorEventos.Servicios.Servicios
 
 			}
 		}
-
+		/*
 		public void PostNuevoEventoCompleto(EventoModel eventoModel)
 		{
 			PersonaService personaService = new PersonaService();
@@ -163,11 +163,11 @@ namespace GestorEventos.Servicios.Servicios
 			foreach(Servicio servicio in eventoModel.ListaDeServiciosContratados)
 			{
 				ServicioService servicioService = new ServicioService();
-				servicioService.AgregarServicio(servicio);
+				servicioService.AgregarNuevoServicio(servicio);
 			}
 
 
 
-		}
+		}*/
 	}
 }

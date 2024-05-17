@@ -62,7 +62,7 @@ namespace GestorEventos.Api.Controllers
 
 		}
 
-
+		/*
 
 		[HttpPost("NuevoEventoCompleto")]
 		public IActionResult PostNuevoEventoModel([FromBody] EventoModel evento)
@@ -93,9 +93,8 @@ namespace GestorEventos.Api.Controllers
 			{
 				return UnprocessableEntity();
 			}
-*/
 
-		}
+		}*/
 
 
 		[HttpPut("{idEvento:int}/Modificar")]
