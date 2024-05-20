@@ -1,9 +1,12 @@
 using GestorEventos.WebUsuario.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace GestorEventos.WebUsuario.Controllers
 {
+
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -12,15 +15,15 @@ namespace GestorEventos.WebUsuario.Controllers
         {
             _logger = logger;
         }
-
+        
         public IActionResult Index()
         {
-
+            /*
             if (!HttpContext.User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Login");
             }
-
+            */
             return View();
         }
 

@@ -27,7 +27,13 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                        <span>Bienvenido @User.Identity.Name </span>
+                    </div>
+                }
+
         </nav>
     </header>
     <div class="container">
