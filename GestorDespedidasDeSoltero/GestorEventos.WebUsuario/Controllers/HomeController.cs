@@ -15,6 +15,12 @@ namespace GestorEventos.WebUsuario.Controllers
 
         public IActionResult Index()
         {
+
+            if (!HttpContext.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             return View();
         }
 
