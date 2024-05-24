@@ -1,5 +1,6 @@
 using GestorEventos.Servicios.Entidades;
 using GestorEventos.Servicios.Servicios;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.Extensions.Options;
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>(); 
 
 
 
@@ -22,6 +23,7 @@ builder.Services.AddAuthentication(opciones =>
 {
     opciones.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
     opciones.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
+ 
     opciones.Events.OnCreatingTicket = ctx =>
     {
         var usuarioServicio = ctx.HttpContext.RequestServices.GetRequiredService<IUsuarioService>();
@@ -51,6 +53,10 @@ builder.Services.AddAuthentication(opciones =>
          //   usuarioServicio.GetUsuarioPorGoogleSubject(ctx.Identity.Claims)
         // Agregar reclamaciones personalizadas aquí
         ctx.Identity.AddClaim(new System.Security.Claims.Claim("usuarioSolterout", idUsuario.ToString()));
+
+        /*var accessToken = ctx.AccessToken;
+        ctx.Identity.AddClaim(new System.Security.Claims.Claim("accessToken", accessToken));
+        */
         return Task.CompletedTask;
     };
 });

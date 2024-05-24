@@ -22,8 +22,8 @@ namespace GestorEventos.WebUsuario.Controllers
 
         public async Task<IActionResult> GoogleResponse()
         {
-            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                
+          var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+             var accessToken = result.Properties.GetTokenValue("access_token");    
             var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(x => new
             {
                 x.Issuer,
@@ -31,7 +31,7 @@ namespace GestorEventos.WebUsuario.Controllers
                 x.Type,
                 x.Value,
             });
-            
+            /* */
 
             return RedirectToAction("Index", "Home", new { area = "" });
         }

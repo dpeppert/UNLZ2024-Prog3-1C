@@ -11,21 +11,31 @@ using Dapper;
 
 namespace GestorEventos.Servicios.Servicios
 {
-	public class ServicioService
-	{
+    public interface IServicioService
+    {
+        bool AgregarNuevoServicio(Servicio servicio);
+        bool BorrarFisicamenteServicio(int idServicio);
+        bool BorrarLogicamenteServicio(int idServicio);
+        IEnumerable<Servicio> GetServicios();
+        Servicio GetServiciosPorId(int IdServicio);
+        bool ModificarServicio(int idServicio, Servicio servicio);
+    }
 
-		private string _connectionString; 
+    public class ServicioService : IServicioService
+    {
 
-		public ServicioService ()
-		{
+        private string _connectionString;
+
+        public ServicioService()
+        {
 
             _connectionString = "Password=Db4dmin!;Persist Security Info=True;User ID=dbadmin;Initial Catalog=gestioneventos;Data Source=azunlz2024dbdes01.database.windows.net";
 
-          
-		}
 
-		public IEnumerable<Servicio> GetServicios()
-		{
+        }
+
+        public IEnumerable<Servicio> GetServicios()
+        {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 List<Servicio> servicios = db.Query<Servicio>("SELECT * FROM Servicios WHERE Borrado = 0").ToList();
@@ -35,8 +45,8 @@ namespace GestorEventos.Servicios.Servicios
             }
         }
 
-		public Servicio GetServiciosPorId(int IdServicio)
-		{
+        public Servicio GetServiciosPorId(int IdServicio)
+        {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 Servicio servicio = db.Query<Servicio>("SELECT * FROM Servicios WHERE IdServicio = " + IdServicio.ToString()).FirstOrDefault();

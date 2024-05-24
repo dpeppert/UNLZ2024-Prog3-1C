@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 namespace GestorEventos.WebUsuario.Controllers
 {
-
     [Authorize]
     public class HomeController : Controller
     {
@@ -18,13 +17,21 @@ namespace GestorEventos.WebUsuario.Controllers
         
         public IActionResult Index()
         {
+
+            var claims = HttpContext.User.Claims.Select(x => new
+            {
+                x.Issuer,
+                x.OriginalIssuer,
+                x.Type,
+                x.Value,
+            });
             /*
             if (!HttpContext.User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Login");
             }
             */
-            return View();
+            return View(claims);
         }
 
         public IActionResult Privacy()
