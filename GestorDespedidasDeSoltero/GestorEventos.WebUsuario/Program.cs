@@ -1,10 +1,16 @@
+using GestorEventos.Servicios.Entidades;
+using GestorEventos.Servicios.Servicios;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+
 
 builder.Services.AddAuthentication(opciones =>
 {
@@ -16,11 +22,41 @@ builder.Services.AddAuthentication(opciones =>
 {
     opciones.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
     opciones.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
+    opciones.Events.OnCreatingTicket = ctx =>
+    {
+        var usuarioServicio = ctx.HttpContext.RequestServices.GetRequiredService<IUsuarioService>();
 
+        string googleNameIdentifier = ctx.Identity.Claims.First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value.ToString(); ;
+
+        var usuario = usuarioServicio.GetUsuarioPorGoogleSubject(googleNameIdentifier);
+        int idUsuario = 0;
+        if (usuario == null)
+        {
+            Usuario usuarioNuevo = new Usuario();
+            usuarioNuevo.Apellido = ctx.Identity.Claims.First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname").Value.ToString();
+            usuarioNuevo.Nombre = ctx.Identity.Claims.First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname").Value.ToString();
+            usuarioNuevo.NombreCompleto = ctx.Identity.Claims.First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").Value.ToString();
+            usuarioNuevo.GoogleIdentificador = googleNameIdentifier;
+            usuarioNuevo.Borrado = false;
+            usuarioNuevo.Email = ctx.Identity.Claims.First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value.ToString();
+
+            idUsuario = usuarioServicio.AgregarNuevoUsuario(usuarioNuevo);
+
+        }
+        else
+        {
+            idUsuario = usuario.IdUsuario;
+        }
+        //ctx.Identity.
+         //   usuarioServicio.GetUsuarioPorGoogleSubject(ctx.Identity.Claims)
+        // Agregar reclamaciones personalizadas aquí
+        ctx.Identity.AddClaim(new System.Security.Claims.Claim("usuarioSolterout", idUsuario.ToString()));
+        return Task.CompletedTask;
+    };
 });
 
 var app = builder.Build();
-
+ 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

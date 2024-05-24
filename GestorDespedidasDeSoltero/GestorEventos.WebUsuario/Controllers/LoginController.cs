@@ -23,13 +23,15 @@ namespace GestorEventos.WebUsuario.Controllers
         public async Task<IActionResult> GoogleResponse()
         {
             var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                
             var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(x => new
             {
                 x.Issuer,
                 x.OriginalIssuer,
                 x.Type,
-                x.Value
+                x.Value,
             });
+            
 
             return RedirectToAction("Index", "Home", new { area = "" });
         }

@@ -1,7 +1,6 @@
-﻿using Microsoft.IdentityModel.Claims;
-using System.Security.Claims;
-using System.Security.Principal;
-
+﻿
+ 
+/*
 namespace GestorEventos.WebUsuario.Infra
 {
     public class ClaimsTransformationModule : ClaimsAuthenticationManager
@@ -21,3 +20,4 @@ namespace GestorEventos.WebUsuario.Infra
         }
     }
 }
+*/

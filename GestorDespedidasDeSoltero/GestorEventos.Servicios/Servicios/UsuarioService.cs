@@ -10,7 +10,15 @@ using Dapper;
 
 namespace GestorEventos.Servicios.Servicios
 {
-    public class UsuarioService
+    public interface IUsuarioService
+    {
+        int AgregarNuevoUsuario(Usuario usuario);
+        Usuario? GetUsuarioPorGoogleSubject(string googleSubject);
+        Usuario? GetUsuarioPorId(int IdUsuario);
+        IEnumerable<Usuario> GetUsuarios();
+    }
+
+    public class UsuarioService : IUsuarioService
     {
         private string _connectionString;
 
@@ -43,11 +51,11 @@ namespace GestorEventos.Servicios.Servicios
 
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                Usuario usuarios = db.Query<Usuario>("SELECT * FROM Usuarios WHERE IdPersona = " + IdPersona.ToString()).FirstOrDefault();
+                Usuario usuarios = db.Query<Usuario>("SELECT * FROM Usuarios WHERE IdUsuario = " + IdUsuario.ToString()).FirstOrDefault();
 
                 return usuarios;
             }
- 
+
 
         }
 
@@ -65,8 +73,8 @@ namespace GestorEventos.Servicios.Servicios
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Usuarios (GoogleIdentificador, Nombre, Apellido, NombreCompleto,  Email) VALUES ( @GoogleIdentificador, @Nombre, @Apellido, @NombreCompleto, @Email); SELECT INSERTED.IdUsuario";
-                int idUsuario = db.Execute(query, usuario);
+                string query = "INSERT INTO Usuarios (GoogleIdentificador, Nombre, Apellido, NombreCompleto,  Email) VALUES ( @GoogleIdentificador, @Nombre, @Apellido, @NombreCompleto, @Email); SELECT CAST(SCOPE_IDENTITY() AS int)";
+                int idUsuario = (int)db.ExecuteScalar(query, usuario);
 
 
                 return idUsuario;
