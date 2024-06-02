@@ -1,11 +1,13 @@
 ﻿using GestorEventos.Servicios.Entidades;
 using GestorEventos.Servicios.Servicios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestorEventos.Api.Controllers
 {
-	[Route("api/[controller]")]
+    [Authorize]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class ServicioController : ControllerBase
 	{

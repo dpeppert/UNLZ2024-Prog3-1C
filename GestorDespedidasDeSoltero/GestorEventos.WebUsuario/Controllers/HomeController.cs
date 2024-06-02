@@ -1,7 +1,9 @@
 using GestorEventos.WebUsuario.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 
 namespace GestorEventos.WebUsuario.Controllers
 {
@@ -15,23 +17,10 @@ namespace GestorEventos.WebUsuario.Controllers
             _logger = logger;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-            var claims = HttpContext.User.Claims.Select(x => new
-            {
-                x.Issuer,
-                x.OriginalIssuer,
-                x.Type,
-                x.Value,
-            });
-            /*
-            if (!HttpContext.User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            */
-            return View(claims);
+            return View();
         }
 
         public IActionResult Privacy()

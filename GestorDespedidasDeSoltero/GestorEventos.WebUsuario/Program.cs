@@ -9,13 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>(); 
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
-
-
+ 
 builder.Services.AddAuthentication(opciones =>
 {
-    opciones.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    opciones.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    opciones.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     opciones.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 })
 .AddCookie()
@@ -54,9 +54,9 @@ builder.Services.AddAuthentication(opciones =>
         // Agregar reclamaciones personalizadas aquí
         ctx.Identity.AddClaim(new System.Security.Claims.Claim("usuarioSolterout", idUsuario.ToString()));
 
-        /*var accessToken = ctx.AccessToken;
+        var accessToken = ctx.AccessToken;
         ctx.Identity.AddClaim(new System.Security.Claims.Claim("accessToken", accessToken));
-        */
+        
         return Task.CompletedTask;
     };
 });
@@ -76,6 +76,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+    app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
