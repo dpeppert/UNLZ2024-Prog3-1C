@@ -19,7 +19,7 @@ namespace GestorEventos.Api.Controllers
 		public IActionResult Get()
 		{ 
 
-			return Ok(personaService.GetPersonasDePrueba());
+			return Ok(personaService.GetPersonas());
 		}
 
 		[HttpGet("{idPersona:int}")]
@@ -27,7 +27,7 @@ namespace GestorEventos.Api.Controllers
 		{
 
 
-			var persona = this.personaService.GetPersonaDePruebaSegunId(idPersona);
+			var persona = this.personaService.GetPersonaSegunId(idPersona);
 
 			if (persona == null)
 				return NotFound();

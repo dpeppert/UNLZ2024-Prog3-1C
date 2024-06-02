@@ -17,16 +17,13 @@ namespace GestorEventos.Servicios.Servicios
         int AgregarNuevaPersona(Persona persona);
         bool BorrarFisicamentePersona(int idPersona);
         bool BorrarLogicamentePersona(int idPersona);
-        Persona? GetPersonaDePruebaSegunId(int IdPersona);
-        IEnumerable<Persona> GetPersonasDePrueba();
+        Persona? GetPersonaSegunId(int IdPersona);
+        IEnumerable<Persona> GetPersonas();
         bool ModificarPersona(int idPersona, Persona persona);
     }
 
     public class PersonaService : IPersonaService
     {
-        //IENumerable para esstablecer que es una Lista de Entidades
-        //public IEnumerable<Persona> PersonasDePrueba { get; set; }
-
         private string _connectionString;
 
         //constructor
@@ -40,7 +37,7 @@ namespace GestorEventos.Servicios.Servicios
 
         }
 
-        public IEnumerable<Persona> GetPersonasDePrueba()
+        public IEnumerable<Persona> GetPersonas()
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
@@ -50,10 +47,9 @@ namespace GestorEventos.Servicios.Servicios
 
             }
 
-            //			return PersonasDePrueba;
         }
 
-        public Persona? GetPersonaDePruebaSegunId(int IdPersona)
+        public Persona? GetPersonaSegunId(int IdPersona)
         {
 
             using (IDbConnection db = new SqlConnection(_connectionString))
@@ -63,18 +59,7 @@ namespace GestorEventos.Servicios.Servicios
                 return persona;
             }
 
-            /*
-                        try
-                        {
-                            Persona persona = PersonasDePrueba.Where(x => x.IdPersona == IdPersona).First();
-                            return persona; 
-                        }
-                        catch (Exception ex)
-                        {
-                            return null;
-                        }
-
-                        */
+           
 
         }
 
@@ -82,8 +67,12 @@ namespace GestorEventos.Servicios.Servicios
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Personas (Nombre, Apellido, Direccion, Telefono, Email) VALUES ( @Nombre, @Apellido, @Direccion, @Telefono, @Email); SELECT Inserted.IdPersona";
-                db.Execute(query, persona);
+                string query = "INSERT INTO Personas " +
+                    "(Nombre, Apellido, Direccion, Telefono, Email)  " +
+                    "VALUES " +
+                    "( @Nombre, @Apellido, @Direccion, @Telefono, @Email); " +
+                    "select  CAST(SCOPE_IDENTITY() AS INT) ";
+                persona.IdPersona =  db.QuerySingle<int>(query, persona);
 
 
                 return persona.IdPersona;

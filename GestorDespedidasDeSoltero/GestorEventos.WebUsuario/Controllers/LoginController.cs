@@ -8,6 +8,11 @@ namespace GestorEventos.WebUsuario.Controllers
     {
         public IActionResult Index()
         {
+            if (HttpContext.User.Identities.First().IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 

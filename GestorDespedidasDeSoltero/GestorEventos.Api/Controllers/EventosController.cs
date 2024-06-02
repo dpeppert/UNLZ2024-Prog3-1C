@@ -19,7 +19,7 @@ namespace GestorEventos.Api.Controllers
 		{
 			EventoService eventosService = new EventoService();
 
-			return Ok(eventosService.GetAllEventos());
+			return Ok(eventosService.GetAllEventosViewModel());
 		}
 
 		/// <summary>
@@ -47,9 +47,9 @@ namespace GestorEventos.Api.Controllers
 			 
 
 
-			bool resultado = eventoService.PostNuevoEvento(evento);
+			int resultado = eventoService.PostNuevoEvento(evento);
 
-			if (resultado)
+			if (resultado > 0)
 			{
 
 				return Ok();
