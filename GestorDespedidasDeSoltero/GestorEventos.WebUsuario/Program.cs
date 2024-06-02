@@ -21,8 +21,8 @@ builder.Services.AddAuthentication(opciones =>
 .AddCookie()
 .AddGoogle(GoogleDefaults.AuthenticationScheme, opciones =>
 {
-    opciones.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
-    opciones.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
+    opciones.ClientId = builder.Configuration.GetSection("GooglaKeys:ClientId").Value;
+    opciones.ClientSecret = builder.Configuration.GetSection("GooglaKeys:ClientSecret").Value;
  
     opciones.Events.OnCreatingTicket = ctx =>
     {
