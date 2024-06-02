@@ -22,7 +22,7 @@ builder.Services.AddAuthentication(opciones =>
 .AddGoogle(GoogleDefaults.AuthenticationScheme, opciones =>
 {
     opciones.ClientId = builder.Configuration.GetSection("GooglaKeys:ClientId").Value;
-    opciones.ClientSecret = builder.Configuration.GetSection("GooglaKeys:ClientSecret").Value;
+    opciones.ClientSecret = builder.Configuration.GetSection("GooglaKeys:ClientPriv").Value;
  
     opciones.Events.OnCreatingTicket = ctx =>
     {
