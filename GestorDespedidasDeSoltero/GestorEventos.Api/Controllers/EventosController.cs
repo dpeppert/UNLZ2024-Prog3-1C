@@ -19,7 +19,7 @@ namespace GestorEventos.Api.Controllers
 		{
 			EventoService eventosService = new EventoService();
 
-			return Ok(eventosService.GetAllEventos());
+			return Ok(eventosService.GetAllEventosViewModel());
 		}
 
 		/// <summary>
