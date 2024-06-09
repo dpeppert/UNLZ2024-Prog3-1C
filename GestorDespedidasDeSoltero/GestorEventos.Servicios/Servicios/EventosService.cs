@@ -16,6 +16,7 @@ namespace GestorEventos.Servicios.Servicios
         bool DeleteEvento(int idEvento);
         IEnumerable<Evento> GetAllEventos();
         IEnumerable<EventoViewModel> GetAllEventosViewModel();
+        IEnumerable<EventoViewModel> GetMisEventos(int IdUsuario);
         Evento GetEventoPorId(int IdEvento);
         int PostNuevoEvento(Evento evento);
         bool PutNuevoEvento(int idEvento, Evento evento);
@@ -48,6 +49,19 @@ namespace GestorEventos.Servicios.Servicios
             }
         }
 
+        public IEnumerable<EventoViewModel> GetMisEventos(int idUsuario)
+        {
+
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                List<EventoViewModel> eventos = db.Query<EventoViewModel>("select eventos.*, EstadosEventos.Descripcion EstadoEvento from eventos left join EstadosEventos on EstadosEventos.IdEstadoEvento = eventos.idEstadoEvento WHERE Eventos.IdUsuario =" + idUsuario.ToString()).ToList();
+
+                return eventos;
+
+            } 
+        }
+
+
         public IEnumerable<EventoViewModel> GetAllEventosViewModel()
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
@@ -79,8 +93,10 @@ namespace GestorEventos.Servicios.Servicios
             {
                 using (IDbConnection db = new SqlConnection(_connectionString))
                 {
-                    string query = "insert into Eventos (NombreEvento, FechaEvento, CantidadPersonas, IdPersonaAgasajada, IdTipoEvento, Visible, Borrado, IdUsuario, IdEstadoEvento) values ( @NombreEvento, @FechaEvento, @CantidadPersonas, @IdPersonaAgasajada, @IdTipoEvento, @Visible, @Borrado, @IdUsuario, @IdEstadoEvento);";
-                    db.Execute(query, evento);
+                    string query = "insert into Eventos (NombreEvento, FechaEvento, CantidadPersonas, IdPersonaAgasajada, IdTipoEvento, Visible, Borrado, IdUsuario, IdEstadoEvento) values ( @NombreEvento, @FechaEvento, @CantidadPersonas, @IdPersonaAgasajada, @IdTipoEvento, @Visible, @Borrado, @IdUsuario, @IdEstadoEvento);" +
+                    "select  CAST(SCOPE_IDENTITY() AS INT) ";
+                    evento.IdEvento = db.QuerySingle<int>(query, evento);
+                    //db.QuerySingle(query, evento);
 
 
                     return evento.IdEvento;

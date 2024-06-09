@@ -99,34 +99,6 @@
             </div>
 
 
-            <table>
-
-                <thead>
-                    <th></th>
-                    <th>Servicio</th>
-                    <th>Precio</th>
-                </thead>
-                <tbody>
-
-                    @foreach( var servicio in Model.ListaDeServiciosDisponibles){ 
-                            
-                        <tr>
-                            <td>
-
-                                <input type="checkbox" name="Servicio" value="@servicio.IdServicio"   />
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => servicio.Descripcion)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => servicio.PrecioServicio)
-                            </td>
-                        </tr>
-
-                    }
-                </tbody>
-            </table>
-
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
