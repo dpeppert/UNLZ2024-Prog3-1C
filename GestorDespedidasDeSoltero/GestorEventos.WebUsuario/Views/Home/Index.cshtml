@@ -5,8 +5,8 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <img class="text-center" src="~/img/logo-solterout.png" /> 
+    <h1 class="display-4">Solterout</h1>
 </div>
     @if (Context.User.Identity.IsAuthenticated)
     { 
@@ -15,7 +15,7 @@
         <h3>@ViewData["AccessToken"]</h3>
         <br />
 
-        <a asp-controller="Login" asp-action="Logout">Logout</a>
+      <!--  <a asp-controller="Login" asp-action="Logout">Logout</a>-->
     }
 
 

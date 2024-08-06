@@ -119,6 +119,7 @@ namespace GestorEventos.Api.Controllers
 		}
 
 
+
 		[HttpDelete("{idEvento:int}/Borrar")]
 		public IActionResult DeleteEvento(int idEvento)
 		{

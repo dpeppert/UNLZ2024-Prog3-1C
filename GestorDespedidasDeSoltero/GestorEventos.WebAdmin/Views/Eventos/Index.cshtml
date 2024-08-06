@@ -8,9 +8,10 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Crear Nuevo</a>
+    <a asp-action="Create" id="btnCrearNuevo">Crear Nuevo</a>
+    <button onclick="OcultarCrear()"  id="btnBorrar">Borrar </button>
 </p>
-<table class="table">
+<table class="table" id="tblEventos">
     <thead>
         <tr>
             <th>
@@ -80,11 +81,50 @@
                 @Html.DisplayFor(modelItem => item.EstadoEvento)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                 
+                @Html.ActionLink("Detalles", "Detalles", new {  id=item.IdEvento }) |
+                <form asp-action="AprobarEvento">
+                       <input type="hidden" asp-for="@item.IdEvento"  />
+                       <input type="submit" value="Aprobar" />
+ 
+                </form>
+                    <form asp-action="RechazarEvento">
+                        <input type="hidden" asp-for="@item.IdEvento" />
+                        <input type="submit" value="Rechazar" />
+
+                    </form>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts { 
+    <script>
+           /*function OcultarCrear(){ 
+               alert("Boton presionado");
+               var estado = document.getElementById("btnCrearNuevo").style.display; 
+               
+               if (estado == "none")
+                   document.getElementById("btnCrearNuevo").style.display = "block";
+               else
+                   document.getElementById("btnCrearNuevo").style.display = "none";
+               //$("btnBorrar").toggle();
+           }
+           */
+
+          function OcultarCrear() {
+            $("#btnCrearNuevo").toggle();
+          }
+
+          $(document).ready(function () {
+            let table = $('#tblEventos').DataTable({
+                paging: false,
+                scrollY: 400,
+                searching: false,
+                ordering: false 
+            });
+        });
+
+    </script>
+}
